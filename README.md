@@ -1,6 +1,6 @@
 # _SelfLoader
 
-Use _Self Loader to avoid include php classes.
+Use _Self Loader to avoid include PHP classes.
 
 
 ## Uses of _SelfLoader
@@ -12,6 +12,19 @@ Use _Self Loader to avoid include php classes.
 ```
 require_once "lib/_SelfLoader/autoload.php";
 ```
+
+## Benefits
+
+* No any software to use. It does run with PHP command.
+* Lightweight.
+* You don't need to include any class, if you are using it.
+* It will load all the PHP classes. No matter where you placed in your root folder. 
+
+
+## Requires
+
+* It only works with OOPs.
+* Need to use namespace.
 
 Thnaks, Happy coding :)
 Krishna Paul <sendmail2krrish@gmail.com>
