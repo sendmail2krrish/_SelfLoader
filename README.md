@@ -15,7 +15,7 @@ require_once "lib/_SelfLoader/autoload.php";
 
 ## Benefits
 
-* No any software to use. It does run with PHP command.
+* No need any software to use. It does run with PHP command.
 * Lightweight.
 * You don't need to include any class, if you are using it.
 * It will load all the PHP classes. No matter where you placed in your root folder. 
