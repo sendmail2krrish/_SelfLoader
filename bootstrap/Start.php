@@ -69,7 +69,7 @@ class Start
             {
                 $getting_namespace = true;
             }
-            if (is_array($token) && $token[0] == T_CLASS)
+            if (is_array($token) && in_array($token[0], [T_CLASS, T_NAMESPACE, T_TRAIT]))
             {
                 $getting_class = true;
             }
