@@ -1,30 +1,17 @@
 # _SelfLoader
 
-Use _Self Loader to avoid include PHP classes.
+Use _Self Loader to avoid include php classes.
 
 
 ## Uses of _SelfLoader
 
 * Set your root directory in **config.json**
-* Go to **bin** and run **php loader.php** using your terminal or power shell or cmd
+* Run **php "{your_directory}/_SelfLoader/bin/loader.php"** using your terminal or power shell or cmd from your root directory.
 * Add **autoload.php**
 
 ```
 require_once "lib/_SelfLoader/autoload.php";
 ```
 
-## Benefits
-
-* No need any software to use. It does run with PHP command.
-* Lightweight.
-* You don't need to include any class, if you are using it.
-* It will load all the PHP classes. No matter where you placed in your root folder. 
-
-
-## Requires
-
-* It only works with OOPs.
-* Need to use namespace.
-
-Thnaks, Happy coding :)
+Thnaks, Happy coding :)<br>
 Krishna Paul <sendmail2krrish@gmail.com>

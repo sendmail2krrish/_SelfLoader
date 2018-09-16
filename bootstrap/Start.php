@@ -13,7 +13,7 @@ class Start
 
     public function run()
     {
-        $this->loadPhpFile(__DIR__ . "/../../../" . $this->loadConfig());
+        $this->loadPhpFile($this->loadConfig());
 
         $bootstrap = \fopen(__DIR__ . "/../bootstrap.json", "w") or die("Unable to open file!");
         fwrite($bootstrap, json_encode($this->classes));
@@ -25,9 +25,8 @@ class Start
     private function loadConfig()
     {
         return json_decode(
-            file_get_contents(__DIR__ . "/../config.json"),
-            true
-        )['root'];
+                        file_get_contents(__DIR__ . "/../config.json"), true
+                )['root'];
     }
 
     private function loadPhpFile($directory)
@@ -49,12 +48,52 @@ class Start
                         $cn = $this->getClassFromFile($directory . '/' . $file);
                         if ($cn)
                         {
-                            $this->classes[$cn] = realpath($directory . '/' . $file);
+                            $this->classes[$cn] = $directory . '/' . $file;
                         }
                     }
                 }
             }
         }
+    }
+
+    private function getRelativePath($from, $to)
+    {
+        // some compatibility fixes for Windows paths
+        $from = is_dir($from) ? rtrim($from, '\/') . '/' : $from;
+        $to   = is_dir($to) ? rtrim($to, '\/') . '/' : $to;
+        $from = str_replace('\\', '/', $from);
+        $to   = str_replace('\\', '/', $to);
+
+        $from    = explode('/', $from);
+        $to      = explode('/', $to);
+        $relPath = $to;
+
+        foreach ($from as $depth => $dir)
+        {
+            // find first non-matching dir
+            if ($dir === $to[$depth])
+            {
+                // ignore this directory
+                array_shift($relPath);
+            }
+            else
+            {
+                // get number of remaining dirs to $from
+                $remaining = count($from) - $depth;
+                if ($remaining > 1)
+                {
+                    // add traversals up to first matching dir
+                    $padLength = (count($relPath) + $remaining - 1) * -1;
+                    $relPath   = array_pad($relPath, $padLength, '..');
+                    break;
+                }
+                else
+                {
+                    $relPath[0] = './' . $relPath[0];
+                }
+            }
+        }
+        return implode('/', $relPath);
     }
 
     private function getClassFromFile($path)
@@ -69,7 +108,7 @@ class Start
             {
                 $getting_namespace = true;
             }
-            if (is_array($token) && in_array($token[0], [T_CLASS, T_NAMESPACE, T_TRAIT]))
+            if (is_array($token) && in_array($token[0], [T_CLASS, T_INTERFACE, T_TRAIT]))
             {
                 $getting_class = true;
             }
